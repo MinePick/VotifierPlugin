@@ -35,12 +35,13 @@ jobs:
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
-      - name: Upload JAR files
+      - name: Upload universal plugin JAR
         uses: actions/upload-artifact@v4
         with:
-          name: VotifierPlugin-jars
-          path: "**/build/libs/*.jar"
+          name: VotifierPlugin-universal
+          path: universal/build/libs/votifierplugin-universal-*-dist.jar
           if-no-files-found: error
+          compression-level: 0
 
   dependency-submission:
     
