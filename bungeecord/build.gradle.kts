@@ -11,7 +11,7 @@ applyShadowConfiguration()
 repositories {
     maven {
         name = "bungeecord"
-        url = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+        url = uri("https://hub.spigotmc.org/nexus/content/repositories/public/")
     }
 }
 

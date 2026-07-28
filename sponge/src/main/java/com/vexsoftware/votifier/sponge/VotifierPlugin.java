@@ -8,7 +8,7 @@ import com.vexsoftware.votifier.net.VotifierSession;
 import com.vexsoftware.votifier.net.protocol.v1crypto.RSAIO;
 import com.vexsoftware.votifier.net.protocol.v1crypto.RSAKeygen;
 import com.vexsoftware.votifier.platform.LoggingAdapter;
-import com.vexsoftware.votifier.platform.VotifierPlugin;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.platform.scheduler.VotifierScheduler;
 import com.vexsoftware.votifier.sponge.cmd.NVReloadCmd;
 import com.vexsoftware.votifier.sponge.cmd.TestVoteCmd;
@@ -36,9 +36,9 @@ import java.security.KeyPair;
 import java.util.HashMap;
 import java.util.Map;
 
-@Plugin(id = "nuvotifier", name = "NuVotifier", version = "@version@", authors = "Ichbinjoe",
+@Plugin(id = "votifierplugin", name = "NuVotifier", version = "@version@", authors = "MinePick.net",
         description = "Safe, smart, and secure Votifier server plugin")
-public class NuVotifier implements VoteHandler, VotifierPlugin, ForwardedVoteListener {
+public class NuVotifier implements VoteHandler, VotifierPluginInterface, ForwardedVoteListener {
 
     @Inject
     public Logger logger;
@@ -170,7 +170,7 @@ public class NuVotifier implements VoteHandler, VotifierPlugin, ForwardedVoteLis
 
         CommandSpec nvreloadSpec = CommandSpec.builder()
                 .description(Text.of("Reloads NuVotifier"))
-                .permission("nuvotifier.reload")
+                .permission("votifierplugin.reload")
                 .executor(new NVReloadCmd(this)).build();
 
         Sponge.getCommandManager().register(this, nvreloadSpec, "nvreload");
@@ -178,7 +178,7 @@ public class NuVotifier implements VoteHandler, VotifierPlugin, ForwardedVoteLis
         CommandSpec testvoteSpec = CommandSpec.builder()
                 .arguments(GenericArguments.allOf(GenericArguments.string(Text.of("args"))))
                 .description(Text.of("Sends a test vote to the server's listeners"))
-                .permission("nuvotifier.testvote")
+                .permission("votifierplugin.testvote")
                 .executor(new TestVoteCmd(this)).build();
 
         Sponge.getCommandManager().register(this, testvoteSpec, "testvote");

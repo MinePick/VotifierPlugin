@@ -18,16 +18,16 @@ public class NVReloadCmd implements SimpleCommand {
     @Override
     public void execute(Invocation invocation) {
         CommandSource sender = invocation.source();
-        sender.sendMessage(Component.text("Reloading NuVotifier...", NamedTextColor.GRAY));
+        sender.sendMessage(Component.text("Reloading VotifierPlugin...", NamedTextColor.GRAY));
         if (plugin.reload()) {
-            sender.sendMessage(Component.text("NuVotifier has been reloaded!", NamedTextColor.DARK_GREEN));
+            sender.sendMessage(Component.text("VotifierPlugin has been reloaded!", NamedTextColor.DARK_GREEN));
         } else {
-            sender.sendMessage(Component.text("Looks like there was a problem reloading NuVotifier, check the console!", NamedTextColor.DARK_RED));
+            sender.sendMessage(Component.text("Looks like there was a problem reloading VotifierPlugin, check the console!", NamedTextColor.DARK_RED));
         }
     }
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return invocation.source().hasPermission("nuvotifier.reload");
+        return invocation.source().hasPermission("votifierplugin.reload");
     }
 }

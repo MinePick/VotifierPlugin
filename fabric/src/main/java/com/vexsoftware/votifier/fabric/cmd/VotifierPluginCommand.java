@@ -23,10 +23,10 @@ public class NuVotifierCommand {
 
     public static void register(NuVotifier plugin, CommandDispatcher<CommandSourceStack> dispatcher) {
         NuVotifierCommand.plugin = plugin;
-        Predicate<CommandSourceStack> reloadPerm = Permissions.require("nuvotifier.reload", 2);
-        Predicate<CommandSourceStack> testVotePerm = Permissions.require("nuvotifier.testvote", 2);
+        Predicate<CommandSourceStack> reloadPerm = Permissions.require("votifierplugin.reload", 2);
+        Predicate<CommandSourceStack> testVotePerm = Permissions.require("votifierplugin.testvote", 2);
         dispatcher.register(
-                literal("nuvotifier").requires(reloadPerm.or(testVotePerm))
+                literal("votifierplugin").requires(reloadPerm.or(testVotePerm))
                         .then(
                         literal("reload").requires(reloadPerm)
                                 .executes(NuVotifierCommand::reload)

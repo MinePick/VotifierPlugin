@@ -50,7 +50,7 @@ import java.security.KeyPair;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Plugin(id = "nuvotifier", name = "NuVotifier", version = "@version@", authors = "Ichbinjoe",
+@Plugin(id = "nuvotifier", name = "NuVotifier", version = "@version@", authors = "MinePick.net",
         description = "Safe, smart, and secure Votifier server plugin")
 public class VotifierPlugin implements VoteHandler, ProxyVotifierPlugin {
 

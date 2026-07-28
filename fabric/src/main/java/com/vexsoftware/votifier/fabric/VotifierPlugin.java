@@ -11,7 +11,7 @@ import com.vexsoftware.votifier.net.VotifierSession;
 import com.vexsoftware.votifier.net.protocol.v1crypto.RSAIO;
 import com.vexsoftware.votifier.net.protocol.v1crypto.RSAKeygen;
 import com.vexsoftware.votifier.platform.LoggingAdapter;
-import com.vexsoftware.votifier.platform.VotifierPlugin;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.platform.scheduler.ScheduledExecutorServiceVotifierScheduler;
 import com.vexsoftware.votifier.platform.scheduler.VotifierScheduler;
 import com.vexsoftware.votifier.support.forwarding.ForwardedVoteListener;
@@ -32,9 +32,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 
-public class NuVotifier implements VoteHandler, VotifierPlugin, ForwardedVoteListener, DedicatedServerModInitializer {
+public class NuVotifier implements VoteHandler, VotifierPluginInterface, ForwardedVoteListener, DedicatedServerModInitializer {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger("nuvotifier");
+    public static final Logger LOGGER = LoggerFactory.getLogger("votifierplugin");
 
     private SLF4JLogger loggerAdapter;
 

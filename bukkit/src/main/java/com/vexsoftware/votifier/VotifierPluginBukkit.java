@@ -31,7 +31,7 @@ import com.vexsoftware.votifier.net.protocol.v1crypto.RSAIO;
 import com.vexsoftware.votifier.net.protocol.v1crypto.RSAKeygen;
 import com.vexsoftware.votifier.platform.JavaUtilLogger;
 import com.vexsoftware.votifier.platform.LoggingAdapter;
-import com.vexsoftware.votifier.platform.VotifierPlugin;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.platform.scheduler.VotifierScheduler;
 import com.vexsoftware.votifier.util.IOUtil;
 import com.vexsoftware.votifier.util.KeyCreator;
@@ -59,7 +59,7 @@ import java.util.logging.Level;
  * @author Blake Beaupain
  * @author Kramer Campbell
  */
-public class NuVotifierBukkit extends JavaPlugin implements VoteHandler, VotifierPlugin, ForwardedVoteListener {
+public class NuVotifierBukkit extends JavaPlugin implements VoteHandler, VotifierPluginInterface, ForwardedVoteListener {
 
     /**
      * The server bootstrap.
@@ -376,7 +376,7 @@ public class NuVotifierBukkit extends JavaPlugin implements VoteHandler, Votifie
     private void fireVotifierEvent(Vote vote) {
         if (VotifierEvent.getHandlerList().getRegisteredListeners().length == 0) {
             getLogger().log(Level.SEVERE, "A vote was received, but you don't have any listeners available to listen for it.");
-            getLogger().log(Level.SEVERE, "See https://github.com/NuVotifier/NuVotifier/wiki/Setup-Guide#vote-listeners for");
+            getLogger().log(Level.SEVERE, "See https://github.com/MinePick/NuVotifier/wiki/Setup-Guide#vote-listeners for");
             getLogger().log(Level.SEVERE, "a list of listeners you can configure.");
         }
 

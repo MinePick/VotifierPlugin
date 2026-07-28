@@ -14,11 +14,11 @@ NuVotifier supports many different platforms using the same universal JAR:
 NuVotifier also adds forwarding and listener test commands not present in the
 original version.
 
-[Setup Guide](https://github.com/NuVotifier/NuVotifier/wiki/Setup-Guide)
+[Setup Guide](https://github.com/MinePick/NuVotifier/wiki/Setup-Guide)
 
-[Troubleshooting Guide](https://github.com/NuVotifier/NuVotifier/wiki/Troubleshooting-Guide)
+[Troubleshooting Guide](https://github.com/MinePick/NuVotifier/wiki/Troubleshooting-Guide)
 
-[Developer Information](https://github.com/NuVotifier/NuVotifier/wiki/Developer-Documentation)
+[Developer Information](https://github.com/MinePick/NuVotifier/wiki/Developer-Documentation)
 
 # License
 

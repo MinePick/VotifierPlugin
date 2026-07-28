@@ -16,7 +16,7 @@ blossom {
 repositories {
     maven {
         name = "velocity"
-        url = uri("https://nexus.velocitypowered.com/repository/maven-public/")
+        url = uri("https://repo.papermc.io/repository/maven-public/")
     }
 }
 

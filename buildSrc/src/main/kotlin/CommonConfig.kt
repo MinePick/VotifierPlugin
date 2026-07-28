@@ -12,9 +12,12 @@ fun Project.applyCommonConfiguration() {
 
     repositories {
         mavenCentral()
-        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots/") }
         maven {
-            name = "Fabric"
+            name = "sponge"
+            url = uri("https://repo.spongepowered.org/repository/maven-public/")
+        }
+        maven {
+            name = "fabric"
             url = uri("https://maven.fabricmc.net/")
         }
     }
