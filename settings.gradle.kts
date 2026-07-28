@@ -1,22 +1,22 @@
-rootProject.name = "nuvotifier"
+rootProject.name = "votifierplugin"
 
-include("nuvotifier-api")
-project(":nuvotifier-api").projectDir = file("api")
+include("votifierplugin-api")
+project(":votifierplugin-api").projectDir = file("api")
 
 
-include("nuvotifier-common")
-project(":nuvotifier-common").projectDir = file("common")
+include("votifierplugin-common")
+project(":votifierplugin-common").projectDir = file("common")
 
-include("nuvotifier-bukkit")
-project(":nuvotifier-bukkit").projectDir = file("bukkit")
-include("nuvotifier-bungeecord")
-project(":nuvotifier-bungeecord").projectDir = file("bungeecord")
-include("nuvotifier-sponge")
-project(":nuvotifier-sponge").projectDir = file("sponge")
-include("nuvotifier-fabric")
-project(":nuvotifier-fabric").projectDir = file("fabric")
-include("nuvotifier-velocity")
-project(":nuvotifier-velocity").projectDir = file("velocity")
+include("votifierplugin-bukkit")
+project(":votifierplugin-bukkit").projectDir = file("bukkit")
+include("votifierplugin-bungeecord")
+project(":votifierplugin-bungeecord").projectDir = file("bungeecord")
+include("votifierplugin-sponge")
+project(":votifierplugin-sponge").projectDir = file("sponge")
+include("votifierplugin-fabric")
+project(":votifierplugin-fabric").projectDir = file("fabric")
+include("votifierplugin-velocity")
+project(":votifierplugin-velocity").projectDir = file("velocity")
 
-include("nuvotifier-universal")
-project(":nuvotifier-universal").projectDir = file("universal")
+include("votifierplugin-universal")
+project(":votifierplugin-universal").projectDir = file("universal")

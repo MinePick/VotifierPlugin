@@ -1,8 +1,8 @@
 package com.vexsoftware.votifier.net.protocol;
 
-import com.vexsoftware.votifier.platform.VotifierPlugin;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.net.protocol.v1crypto.RSA;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.util.QuietException;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
@@ -37,7 +37,7 @@ public class VotifierProtocol1Decoder extends ByteToMessageDecoder {
         byte[] block = ByteBufUtil.getBytes(buf);
         buf.skipBytes(buf.readableBytes());
 
-        VotifierPlugin plugin = ctx.channel().attr(VotifierPlugin.KEY).get();
+        VotifierPluginInterface plugin = ctx.channel().attr(VotifierPluginInterface.KEY).get();
 
         try {
             block = RSA.decrypt(block, plugin.getProtocolV1Key().getPrivate());
@@ -53,11 +53,11 @@ public class VotifierProtocol1Decoder extends ByteToMessageDecoder {
         String all = new String(block, StandardCharsets.US_ASCII);
         String[] split = all.split("\n");
         if (split.length < 5) {
-            throw new QuietException("Not enough fields specified in vote. This is not a NuVotifier issue. Got " + split.length + " fields, but needed 5.");
+            throw new QuietException("Not enough fields specified in vote. This is not a VotifierPlugin issue. Got " + split.length + " fields, but needed 5.");
         }
 
         if (!split[0].equals("VOTE")) {
-            throw new QuietException("The VOTE opcode was not present. This is not a NuVotifier issue, but a bug with the server list.");
+            throw new QuietException("The VOTE opcode was not present. This is not a VotifierPlugin issue, but a bug with the server list.");
         }
 
         // Create the vote.

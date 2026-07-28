@@ -5,4 +5,4 @@ disable-v1-protocol: false
 tokens: {default: server2token}
 forwarding:
     method: pluginMessaging
-    pluginMessaging: {channel: 'nuvotifier:votes'}
+    pluginMessaging: {channel: 'votifierplugin:votes'}

@@ -7,9 +7,9 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.concurrent.TimeUnit;
 
 class BukkitScheduler implements VotifierScheduler {
-    private final NuVotifierBukkit plugin;
+    private final VotifierPluginBukkit plugin;
 
-    public BukkitScheduler(NuVotifierBukkit plugin) {
+    public BukkitScheduler(VotifierPluginBukkit plugin) {
         this.plugin = plugin;
     }
 

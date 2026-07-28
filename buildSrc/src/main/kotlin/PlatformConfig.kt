@@ -24,8 +24,8 @@ fun Project.applyShadowConfiguration() {
     tasks.named<ShadowJar>("shadowJar") {
         archiveClassifier.set("dist")
         dependencies {
-            include(project(":nuvotifier-api"))
-            include(project(":nuvotifier-common"))
+            include(project(":votifierplugin-api"))
+            include(project(":votifierplugin-common"))
 
             exclude("com.google.code.findbugs:jsr305")
         }

@@ -1,15 +1,18 @@
 package com.vexsoftware.votifier.bungee;
 
-import com.google.common.collect.ImmutableList;
 import com.vexsoftware.votifier.VoteHandler;
-import com.vexsoftware.votifier.bungee.cmd.NVReloadCmd;
+import com.vexsoftware.votifier.bungee.cmd.ReloadCmd;
 import com.vexsoftware.votifier.bungee.cmd.TestVoteCmd;
+import com.vexsoftware.votifier.bungee.events.VotifierEvent;
+import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.net.VotifierServerBootstrap;
+import com.vexsoftware.votifier.net.VotifierSession;
+import com.vexsoftware.votifier.net.protocol.v1crypto.RSAIO;
+import com.vexsoftware.votifier.net.protocol.v1crypto.RSAKeygen;
 import com.vexsoftware.votifier.platform.BackendServer;
 import com.vexsoftware.votifier.platform.JavaUtilLogger;
 import com.vexsoftware.votifier.platform.LoggingAdapter;
 import com.vexsoftware.votifier.platform.ProxyVotifierPlugin;
-import com.vexsoftware.votifier.bungee.events.VotifierEvent;
 import com.vexsoftware.votifier.platform.scheduler.VotifierScheduler;
 import com.vexsoftware.votifier.support.forwarding.ForwardingVoteSource;
 import com.vexsoftware.votifier.support.forwarding.ServerFilter;
@@ -17,10 +20,6 @@ import com.vexsoftware.votifier.support.forwarding.cache.FileVoteCache;
 import com.vexsoftware.votifier.support.forwarding.cache.MemoryVoteCache;
 import com.vexsoftware.votifier.support.forwarding.cache.VoteCache;
 import com.vexsoftware.votifier.support.forwarding.proxy.ProxyForwardingVoteSource;
-import com.vexsoftware.votifier.model.Vote;
-import com.vexsoftware.votifier.net.VotifierSession;
-import com.vexsoftware.votifier.net.protocol.v1crypto.RSAIO;
-import com.vexsoftware.votifier.net.protocol.v1crypto.RSAKeygen;
 import com.vexsoftware.votifier.util.IOUtil;
 import com.vexsoftware.votifier.util.KeyCreator;
 import com.vexsoftware.votifier.util.TokenUtil;
@@ -50,7 +49,7 @@ import java.util.concurrent.FutureTask;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
-public class NuVotifier extends Plugin implements VoteHandler, ProxyVotifierPlugin {
+public class VotifierPlugin extends Plugin implements VoteHandler, ProxyVotifierPlugin {
 
     /**
      * The server channel.
@@ -112,13 +111,13 @@ public class NuVotifier extends Plugin implements VoteHandler, ProxyVotifierPlug
                  * port number.
                  */
                 getLogger().info("------------------------------------------------------------------------------");
-                getLogger().info("Assigning NuVotifier to listen on port 8192. If you are hosting BungeeCord on a");
+                getLogger().info("Assigning VotifierPlugin to listen on port 8192. If you are hosting BungeeCord on a");
                 getLogger().info("shared server please check with your hosting provider to verify that this port");
                 getLogger().info("is available for your use. Chances are that your hosting provider will assign");
                 getLogger().info("a different port, which you need to specify in config.yml");
                 getLogger().info("------------------------------------------------------------------------------");
-                getLogger().info("Assigning NuVotifier to listen to interface 0.0.0.0. This is usually alright,");
-                getLogger().info("however, if you want NuVotifier to only listen to one interface for security ");
+                getLogger().info("Assigning VotifierPlugin to listen to interface 0.0.0.0. This is usually alright,");
+                getLogger().info("however, if you want VotifierPlugin to only listen to one interface for security ");
                 getLogger().info("reasons (or you use a shared host), you may change this in the config.yml.");
                 getLogger().info("------------------------------------------------------------------------------");
                 getLogger().info("Your default Votifier token is " + token + ".");
@@ -196,13 +195,13 @@ public class NuVotifier extends Plugin implements VoteHandler, ProxyVotifierPlug
         if (disablev1) {
             getLogger().info("------------------------------------------------------------------------------");
             getLogger().info("Votifier protocol v1 parsing has been disabled. Most voting websites do not");
-            getLogger().info("currently support the modern Votifier protocol in NuVotifier.");
+            getLogger().info("currently support the modern Votifier protocol in VotifierPlugin.");
             getLogger().info("------------------------------------------------------------------------------");
         }
 
         // Must set up server asynchronously due to BungeeCord goofiness.
         FutureTask<?> initTask = new FutureTask<>(Executors.callable(() -> {
-            this.bootstrap = new VotifierServerBootstrap(host, port, NuVotifier.this, disablev1);
+            this.bootstrap = new VotifierServerBootstrap(host, port, VotifierPlugin.this, disablev1);
             this.bootstrap.start(err -> {});
         }));
         getProxy().getScheduler().runAsync(this, initTask);
@@ -217,7 +216,7 @@ public class NuVotifier extends Plugin implements VoteHandler, ProxyVotifierPlug
         if ("none".equals(fwdMethod)) {
             getLogger().info("Method none selected for vote forwarding: Votes will not be forwarded to backend servers.");
         } else if ("pluginmessaging".equals(fwdMethod)) {
-            String channel = fwdCfg.getString("pluginMessaging.channel", "NuVotifier");
+            String channel = fwdCfg.getString("pluginMessaging.channel", "VotifierPlugin");
             String cacheMethod = fwdCfg.getString("pluginMessaging.cache", "file").toLowerCase();
             VoteCache voteCache = null;
             if ("none".equals(cacheMethod)) {
@@ -250,7 +249,7 @@ public class NuVotifier extends Plugin implements VoteHandler, ProxyVotifierPlug
                     forwardingMethod = new PluginMessagingForwardingSource(channel, filter, this, voteCache, dumpRate);
                     getLogger().info("Forwarding votes over PluginMessaging channel '" + channel + "' for vote forwarding!");
                 } catch (RuntimeException e) {
-                    getLogger().log(Level.SEVERE, "NuVotifier could not set up PluginMessaging for vote forwarding!", e);
+                    getLogger().log(Level.SEVERE, "VotifierPlugin could not set up PluginMessaging for vote forwarding!", e);
                 }
             } else {
                 try {
@@ -259,7 +258,7 @@ public class NuVotifier extends Plugin implements VoteHandler, ProxyVotifierPlug
                     forwardingMethod = new OnlineForwardPluginMessagingForwardingSource(channel, this, filter, voteCache, fallbackServer, dumpRate);
                     getLogger().info("Forwarding votes over PluginMessaging channel '" + channel + "' for vote forwarding for online players!");
                 } catch (RuntimeException e) {
-                    getLogger().log(Level.SEVERE, "NuVotifier could not set up PluginMessaging for vote forwarding!", e);
+                    getLogger().log(Level.SEVERE, "VotifierPlugin could not set up PluginMessaging for vote forwarding!", e);
                 }
             }
         } else if ("proxy".equals(fwdMethod)) {
@@ -293,7 +292,7 @@ public class NuVotifier extends Plugin implements VoteHandler, ProxyVotifierPlug
             }
 
             forwardingMethod = bootstrap.createForwardingSource(serverList, null);
-            getLogger().info("Forwarding votes from this NuVotifier instance to another NuVotifier server.");
+            getLogger().info("Forwarding votes from this VotifierPlugin instance to another VotifierPlugin server.");
         } else {
             getLogger().severe("No vote forwarding method '" + fwdMethod + "' known. Defaulting to noop implementation.");
         }
@@ -305,7 +304,7 @@ public class NuVotifier extends Plugin implements VoteHandler, ProxyVotifierPlug
         pluginLogger = new JavaUtilLogger(getLogger());
 
         PluginManager pm = ProxyServer.getInstance().getPluginManager();
-        pm.registerCommand(this, new NVReloadCmd(this));
+        pm.registerCommand(this, new ReloadCmd(this));
         pm.registerCommand(this, new TestVoteCmd(this));
         pm.registerListener(this, new ReloadListener(this));
 

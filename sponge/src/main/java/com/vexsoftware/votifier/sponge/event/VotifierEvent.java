@@ -5,7 +5,7 @@ import org.spongepowered.api.event.cause.Cause;
 import org.spongepowered.api.event.impl.AbstractEvent;
 
 /**
- * This event is posted whenever a vote is received and processed by NuVotifier. Note that NuVotifier posts this event
+ * This event is posted whenever a vote is received and processed by VotifierPlugin. Note that VotifierPlugin posts this event
  * synchronously.
  */
 public class VotifierEvent extends AbstractEvent {

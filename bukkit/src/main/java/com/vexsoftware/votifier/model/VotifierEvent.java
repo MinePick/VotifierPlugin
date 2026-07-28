@@ -2,13 +2,12 @@ package com.vexsoftware.votifier.model;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * {@code VotifierEvent} is a custom Bukkit event class that is sent
  * synchronously to CraftBukkit's main thread allowing other plugins to listen
  * for votes.
- *
- * @author frelling
  */
 public class VotifierEvent extends Event {
     /**
@@ -51,7 +50,7 @@ public class VotifierEvent extends Event {
     }
 
     @Override
-    public HandlerList getHandlers() {
+    public @NotNull HandlerList getHandlers() {
         return handlers;
     }
 

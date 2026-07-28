@@ -13,16 +13,12 @@ import net.md_5.bungee.api.event.ServerConnectedEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 
-/**
- * @author Joseph Hirschfeld
- * @date 12/31/2015
- */
 public final class OnlineForwardPluginMessagingForwardingSource extends AbstractPluginMessagingForwardingSource implements Listener {
-    public OnlineForwardPluginMessagingForwardingSource(String channel, NuVotifier nuVotifier, ServerFilter serverFilter,
+    public OnlineForwardPluginMessagingForwardingSource(String channel, VotifierPlugin votifierPlugin, ServerFilter serverFilter,
                                                         VoteCache cache, String fallbackServer, int dumpRate) {
-        super(channel, serverFilter, nuVotifier, cache, dumpRate);
+        super(channel, serverFilter, votifierPlugin, cache, dumpRate);
         this.fallbackServer = fallbackServer;
-        ProxyServer.getInstance().getPluginManager().registerListener(nuVotifier, this);
+        ProxyServer.getInstance().getPluginManager().registerListener(votifierPlugin, this);
     }
 
     private final String fallbackServer;

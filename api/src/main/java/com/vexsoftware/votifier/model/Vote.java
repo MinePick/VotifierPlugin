@@ -26,8 +26,6 @@ import java.util.Base64;
 
 /**
  * A model for a vote.
- *
- * @author Blake Beaupain
  */
 public class Vote {
 

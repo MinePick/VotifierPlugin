@@ -10,7 +10,7 @@ import com.vexsoftware.votifier.net.protocol.v1crypto.RSAKeygen;
 import com.vexsoftware.votifier.platform.LoggingAdapter;
 import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.platform.scheduler.VotifierScheduler;
-import com.vexsoftware.votifier.sponge.cmd.NVReloadCmd;
+import com.vexsoftware.votifier.sponge.cmd.ReloadCmd;
 import com.vexsoftware.votifier.sponge.cmd.TestVoteCmd;
 import com.vexsoftware.votifier.sponge.config.ConfigLoader;
 import com.vexsoftware.votifier.sponge.event.VotifierEvent;
@@ -36,9 +36,9 @@ import java.security.KeyPair;
 import java.util.HashMap;
 import java.util.Map;
 
-@Plugin(id = "votifierplugin", name = "NuVotifier", version = "@version@", authors = "MinePick.net",
+@Plugin(id = "votifierplugin", name = "VotifierPlugin", version = "@version@", authors = "MinePick.net",
         description = "Safe, smart, and secure Votifier server plugin")
-public class NuVotifier implements VoteHandler, VotifierPluginInterface, ForwardedVoteListener {
+public class VotifierPlugin implements VoteHandler, VotifierPluginInterface, ForwardedVoteListener {
 
     @Inject
     public Logger logger;
@@ -95,7 +95,7 @@ public class NuVotifier implements VoteHandler, VotifierPluginInterface, Forward
             if (disablev1) {
                 logger.info("------------------------------------------------------------------------------");
                 logger.info("Votifier protocol v1 parsing has been disabled. Most voting websites do not");
-                logger.info("currently support the modern Votifier protocol in NuVotifier.");
+                logger.info("currently support the modern Votifier protocol in VotifierPlugin.");
                 logger.info("------------------------------------------------------------------------------");
             }
 
@@ -120,7 +120,7 @@ public class NuVotifier implements VoteHandler, VotifierPluginInterface, Forward
                     forwardingMethod = new SpongePluginMessagingForwardingSink(this, channel, this);
                     getLogger().info("Receiving votes over PluginMessaging channel '" + channel + "'.");
                 } catch (RuntimeException e) {
-                    logger.error("NuVotifier could not set up PluginMessaging for vote forwarding!", e);
+                    logger.error("VotifierPlugin could not set up PluginMessaging for vote forwarding!", e);
                 }
             } else {
                 logger.error("No vote forwarding method '" + method + "' known. Defaulting to noop implementation.");
@@ -168,12 +168,12 @@ public class NuVotifier implements VoteHandler, VotifierPluginInterface, Forward
         this.scheduler = new SpongeScheduler(this);
         this.loggerAdapter = new SLF4JLogger(logger);
 
-        CommandSpec nvreloadSpec = CommandSpec.builder()
-                .description(Text.of("Reloads NuVotifier"))
+        CommandSpec commandSpec = CommandSpec.builder()
+                .description(Text.of("Reloads VotifierPlugin"))
                 .permission("votifierplugin.reload")
-                .executor(new NVReloadCmd(this)).build();
+                .executor(new ReloadCmd(this)).build();
 
-        Sponge.getCommandManager().register(this, nvreloadSpec, "nvreload");
+        Sponge.getCommandManager().register(this, commandSpec, "votifierpluginreload");
 
         CommandSpec testvoteSpec = CommandSpec.builder()
                 .arguments(GenericArguments.allOf(GenericArguments.string(Text.of("args"))))

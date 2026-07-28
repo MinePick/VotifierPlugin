@@ -5,17 +5,18 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
-public class NVReloadCmd implements CommandExecutor {
+public class ReloadCmd implements CommandExecutor {
 
     private final VotifierPluginBukkit plugin;
 
-    public NVReloadCmd(VotifierPluginBukkit plugin) {
+    public ReloadCmd(VotifierPluginBukkit plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
         if (sender.hasPermission("votifierplugin.reload")) {
             sender.sendMessage(ChatColor.GRAY + "Reloading VotifierPlugin...");
             if (plugin.reload()) {

@@ -1,7 +1,7 @@
 package com.vexsoftware.votifier.sponge.config;
 
 import com.google.common.reflect.TypeToken;
-import com.vexsoftware.votifier.sponge.NuVotifier;
+import com.vexsoftware.votifier.sponge.VotifierPlugin;
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.ConfigurationOptions;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -14,7 +14,7 @@ public class ConfigLoader {
 
     private static SpongeConfig spongeConfig;
 
-    public static void loadConfig(NuVotifier pl) {
+    public static void loadConfig(VotifierPlugin pl) {
         if (!pl.getConfigDir().exists()) {
             if (!pl.getConfigDir().mkdirs()) {
                 throw new RuntimeException("Unable to create the plugin data folder " + pl.getConfigDir());

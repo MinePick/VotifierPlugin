@@ -1,6 +1,6 @@
 package com.vexsoftware.votifier.fabric.forwarding;
 
-import com.vexsoftware.votifier.fabric.NuVotifier;
+import com.vexsoftware.votifier.fabric.VotifierPlugin;
 import com.vexsoftware.votifier.support.forwarding.AbstractPluginMessagingForwardingSink;
 import com.vexsoftware.votifier.support.forwarding.ForwardedVoteListener;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -33,7 +33,7 @@ public class FabricMessagingForwardingSink extends AbstractPluginMessagingForwar
         try {
             this.handlePluginMessage(data);
         } catch (Exception e) {
-            NuVotifier.LOGGER.error("There was an unknown error when processing a forwarded vote.", e);
+            VotifierPlugin.LOGGER.error("There was an unknown error when processing a forwarded vote.", e);
         }
     }
 }

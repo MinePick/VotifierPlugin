@@ -21,8 +21,8 @@ configurations {
 
 dependencies {
     "compileOnly"("io.papermc.paper:paper-api:1.18.2-R0.1-SNAPSHOT")
-    "api"(project(":nuvotifier-api"))
-    "api"(project(":nuvotifier-common"))
+    "api"(project(":votifierplugin-api"))
+    "api"(project(":votifierplugin-common"))
 }
 
 
@@ -46,8 +46,8 @@ tasks.named<ShadowJar>("shadowJar") {
     configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
 
     dependencies {
-        include(dependency(":nuvotifier-api"))
-        include(dependency(":nuvotifier-common"))
+        include(dependency(":votifierplugin-api"))
+        include(dependency(":votifierplugin-common"))
     }
 }
 

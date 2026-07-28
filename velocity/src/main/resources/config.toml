@@ -7,7 +7,7 @@ port = 8192
 
 # Setting this option to true will disable handling of Protocol v1 packets. While the old protocol is not secure, this
 # option is currently not recommended as most voting sites only support the old protocol at present. However, if you are
-# using NuVotifier's proxy forwarding mechanism, enabling this option will increase your server's security.
+# using VotifierPlugin's proxy forwarding mechanism, enabling this option will increase your server's security.
 disable-v1-protocol = false
 
 # All tokens, labeled by the serviceName of each server list.
@@ -15,20 +15,20 @@ disable-v1-protocol = false
 # Default token for all server lists, if another isn't supplied.
 default = "%default_token%"
 
-# Configuration section for all vote forwarding to NuVotifier
+# Configuration section for all vote forwarding to VotifierPlugin
 [forwarding]
 # Sets whether to set up a remote method for fowarding. Supported methods:
 # - none - Does not set up a forwarding method.
 # - pluginMessaging - Sets up plugin messaging.
-# - proxy - Proxies votes to other NuVotifier servers from this server.
+# - proxy - Proxies votes to other VotifierPlugin servers from this server.
 method = "none"
 
 [forwarding.pluginMessaging]
-channel = "nuvotifier:votes"
+channel = "votifierplugin:votes"
 
 # Only send votes to certain servers. If a server is present on excludedServers, then votes will NOT be forwarded
 # to them. If excludedServers is not present, votes will be sent to all servers.
-# If onlySendToJoinedServer is true and a player is on one of these servers, NuVotifier will process the vote as if the
+# If onlySendToJoinedServer is true and a player is on one of these servers, VotifierPlugin will process the vote as if the
 # player was not on the network at all.
 # excludedServers = ["server1", "server2"]
 

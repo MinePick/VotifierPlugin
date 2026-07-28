@@ -1,28 +1,8 @@
-/*
- * Copyright (C) 2012 Vex Software LLC
- * This file is part of Votifier.
- *
- * Votifier is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Votifier is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Votifier.  If not, see <http://www.gnu.org/licenses/>.
- */
-
 package com.vexsoftware.votifier;
 
-import com.vexsoftware.votifier.cmd.NVReloadCmd;
+import com.vexsoftware.votifier.cmd.ReloadCmd;
 import com.vexsoftware.votifier.cmd.TestVoteCmd;
 import com.vexsoftware.votifier.forwarding.BukkitPluginMessagingForwardingSink;
-import com.vexsoftware.votifier.support.forwarding.ForwardedVoteListener;
-import com.vexsoftware.votifier.support.forwarding.ForwardingVoteSink;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.model.VotifierEvent;
 import com.vexsoftware.votifier.net.VotifierServerBootstrap;
@@ -33,6 +13,8 @@ import com.vexsoftware.votifier.platform.JavaUtilLogger;
 import com.vexsoftware.votifier.platform.LoggingAdapter;
 import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.platform.scheduler.VotifierScheduler;
+import com.vexsoftware.votifier.support.forwarding.ForwardedVoteListener;
+import com.vexsoftware.votifier.support.forwarding.ForwardingVoteSink;
 import com.vexsoftware.votifier.util.IOUtil;
 import com.vexsoftware.votifier.util.KeyCreator;
 import com.vexsoftware.votifier.util.TokenUtil;
@@ -53,32 +35,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 
-/**
- * The main Votifier plugin class.
- *
- * @author Blake Beaupain
- * @author Kramer Campbell
- */
-public class NuVotifierBukkit extends JavaPlugin implements VoteHandler, VotifierPluginInterface, ForwardedVoteListener {
+public class VotifierPluginBukkit extends JavaPlugin implements VoteHandler, VotifierPluginInterface, ForwardedVoteListener {
 
-    /**
-     * The server bootstrap.
-     */
     private VotifierServerBootstrap bootstrap;
-
-    /**
-     * The RSA key pair.
-     */
     private KeyPair keyPair;
-
-    /**
-     * Debug mode flag
-     */
     private boolean debug;
-
-    /**
-     * Keys used for websites.
-     */
     private Map<String, Key> tokens = new HashMap<>();
 
     private ForwardingVoteSink forwardingMethod;
@@ -141,12 +102,12 @@ public class NuVotifierBukkit extends JavaPlugin implements VoteHandler, Votifie
                  * port number.
                  */
                 getLogger().info("------------------------------------------------------------------------------");
-                getLogger().info("Assigning NuVotifier to listen on port 8192. If you are hosting Craftbukkit on a");
+                getLogger().info("Assigning VotifierPlugin to listen on port 8192. If you are hosting Craftbukkit on a");
                 getLogger().info("shared server please check with your hosting provider to verify that this port");
                 getLogger().info("is available for your use. Chances are that your hosting provider will assign");
                 getLogger().info("a different port, which you need to specify in config.yml");
                 getLogger().info("------------------------------------------------------------------------------");
-                getLogger().info("Your default NuVotifier token is " + token + ".");
+                getLogger().info("Your default VotifierPlugin token is " + token + ".");
                 getLogger().info("You will need to provide this token when you submit your server to a voting");
                 getLogger().info("list.");
                 getLogger().info("------------------------------------------------------------------------------");
@@ -230,7 +191,7 @@ public class NuVotifierBukkit extends JavaPlugin implements VoteHandler, Votifie
             if (disablev1) {
                 getLogger().info("------------------------------------------------------------------------------");
                 getLogger().info("Votifier protocol v1 parsing has been disabled. Most voting websites do not");
-                getLogger().info("currently support the modern Votifier protocol in NuVotifier.");
+                getLogger().info("currently support the modern Votifier protocol in VotifierPlugin.");
                 getLogger().info("------------------------------------------------------------------------------");
             }
 
@@ -250,12 +211,12 @@ public class NuVotifierBukkit extends JavaPlugin implements VoteHandler, Votifie
             if ("none".equals(method)) {
                 getLogger().info("Method none selected for vote forwarding: Votes will not be received from a forwarder.");
             } else if ("pluginmessaging".equals(method)) {
-                String channel = forwardingConfig.getString("pluginMessaging.channel", "NuVotifier");
+                String channel = forwardingConfig.getString("pluginMessaging.channel", "VotifierPlugin");
                 try {
                     forwardingMethod = new BukkitPluginMessagingForwardingSink(this, channel, this);
                     getLogger().info("Receiving votes over PluginMessaging channel '" + channel + "'.");
                 } catch (RuntimeException e) {
-                    getLogger().log(Level.SEVERE, "NuVotifier could not set up PluginMessaging for vote forwarding!", e);
+                    getLogger().log(Level.SEVERE, "VotifierPlugin could not set up PluginMessaging for vote forwarding!", e);
                 }
             } else {
                 getLogger().severe("No vote forwarding method '" + method + "' known. Defaulting to noop implementation.");
@@ -279,7 +240,7 @@ public class NuVotifierBukkit extends JavaPlugin implements VoteHandler, Votifie
 
     @Override
     public void onEnable() {
-        getCommand("nvreload").setExecutor(new NVReloadCmd(this));
+        getCommand("votifierpluginreload").setExecutor(new ReloadCmd(this));
         getCommand("testvote").setExecutor(new TestVoteCmd(this));
 
         if (!loadAndBind()) {
@@ -376,7 +337,7 @@ public class NuVotifierBukkit extends JavaPlugin implements VoteHandler, Votifie
     private void fireVotifierEvent(Vote vote) {
         if (VotifierEvent.getHandlerList().getRegisteredListeners().length == 0) {
             getLogger().log(Level.SEVERE, "A vote was received, but you don't have any listeners available to listen for it.");
-            getLogger().log(Level.SEVERE, "See https://github.com/MinePick/NuVotifier/wiki/Setup-Guide#vote-listeners for");
+            getLogger().log(Level.SEVERE, "See https://github.com/MinePick/VotifierPlugin/wiki/Setup-Guide#vote-listeners for");
             getLogger().log(Level.SEVERE, "a list of listeners you can configure.");
         }
 

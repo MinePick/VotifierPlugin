@@ -1,7 +1,7 @@
 package com.vexsoftware.votifier.fabric;
 
 import com.vexsoftware.votifier.VoteHandler;
-import com.vexsoftware.votifier.fabric.cmd.NuVotifierCommand;
+import com.vexsoftware.votifier.fabric.cmd.VotifierPluginCommand;
 import com.vexsoftware.votifier.fabric.config.ConfigLoader;
 import com.vexsoftware.votifier.fabric.event.VoteListener;
 import com.vexsoftware.votifier.fabric.forwarding.FabricMessagingForwardingSink;
@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Executors;
 
-public class NuVotifier implements VoteHandler, VotifierPluginInterface, ForwardedVoteListener, DedicatedServerModInitializer {
+public class VotifierPlugin implements VoteHandler, VotifierPluginInterface, ForwardedVoteListener, DedicatedServerModInitializer {
 
     public static final Logger LOGGER = LoggerFactory.getLogger("votifierplugin");
 
@@ -87,7 +87,7 @@ public class NuVotifier implements VoteHandler, VotifierPluginInterface, Forward
             if (disablev1) {
                 LOGGER.info("------------------------------------------------------------------------------");
                 LOGGER.info("Votifier protocol v1 parsing has been disabled. Most voting websites do not");
-                LOGGER.info("currently support the modern Votifier protocol in NuVotifier.");
+                LOGGER.info("currently support the modern Votifier protocol in VotifierPlugin.");
                 LOGGER.info("------------------------------------------------------------------------------");
             }
 
@@ -112,7 +112,7 @@ public class NuVotifier implements VoteHandler, VotifierPluginInterface, Forward
                     forwardingMethod = new FabricMessagingForwardingSink(channel, this);
                     LOGGER.info("Receiving votes over PluginMessaging channel '" + channel + "'.");
                 } catch (RuntimeException e) {
-                    LOGGER.error("NuVotifier could not set up PluginMessaging for vote forwarding!", e);
+                    LOGGER.error("VotifierPlugin could not set up PluginMessaging for vote forwarding!", e);
                 }
             } else {
                 LOGGER.error("No vote forwarding method '" + method + "' known. Defaulting to noop implementation.");
@@ -181,7 +181,7 @@ public class NuVotifier implements VoteHandler, VotifierPluginInterface, Forward
 
     @Override
     public void onInitializeServer() {
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> NuVotifierCommand.register(this, dispatcher));
+        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> VotifierPluginCommand.register(this, dispatcher));
         ServerLifecycleEvents.END_DATA_PACK_RELOAD.register((server, resourceManager, success) -> this.reload());
         ServerLifecycleEvents.SERVER_STARTING.register(this::onServerStart);
         ServerLifecycleEvents.SERVER_STOPPING.register(this::onServerStop);

@@ -3,7 +3,7 @@ package com.vexsoftware.votifier.net;
 import com.vexsoftware.votifier.net.protocol.VoteInboundHandler;
 import com.vexsoftware.votifier.net.protocol.VotifierGreetingHandler;
 import com.vexsoftware.votifier.net.protocol.VotifierProtocolDifferentiator;
-import com.vexsoftware.votifier.platform.VotifierPlugin;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.support.forwarding.cache.VoteCache;
 import com.vexsoftware.votifier.support.forwarding.proxy.ProxyForwardingVoteSource;
 import io.netty.bootstrap.Bootstrap;
@@ -21,7 +21,6 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.concurrent.FastThreadLocalThread;
-import io.netty.util.concurrent.GlobalEventExecutor;
 
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -38,12 +37,12 @@ public class VotifierServerBootstrap {
     private final int port;
     private final EventLoopGroup bossLoopGroup;
     private final EventLoopGroup eventLoopGroup;
-    private final VotifierPlugin plugin;
+    private final VotifierPluginInterface plugin;
     private final boolean v1Disable;
 
     private Channel serverChannel;
 
-    public VotifierServerBootstrap(String host, int port, VotifierPlugin plugin, boolean v1Disable) {
+    public VotifierServerBootstrap(String host, int port, VotifierPluginInterface plugin, boolean v1Disable) {
         this.host = host;
         this.port = port;
         this.plugin = plugin;
@@ -79,7 +78,7 @@ public class VotifierServerBootstrap {
                     @Override
                     protected void initChannel(SocketChannel channel) {
                         channel.attr(VotifierSession.KEY).set(new VotifierSession());
-                        channel.attr(VotifierPlugin.KEY).set(plugin);
+                        channel.attr(VotifierPluginInterface.KEY).set(plugin);
                         channel.pipeline().addLast("greetingHandler", VotifierGreetingHandler.INSTANCE);
                         channel.pipeline().addLast("protocolDifferentiator", new VotifierProtocolDifferentiator(false, !v1Disable));
                         channel.pipeline().addLast("voteHandler", voteInboundHandler);

@@ -8,9 +8,9 @@ import org.spongepowered.api.scheduler.Task;
 import java.util.concurrent.TimeUnit;
 
 class SpongeScheduler implements VotifierScheduler {
-    private final NuVotifier plugin;
+    private final VotifierPlugin plugin;
 
-    SpongeScheduler(NuVotifier plugin) {
+    SpongeScheduler(VotifierPlugin plugin) {
         this.plugin = plugin;
     }
 

@@ -7,7 +7,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Command;
 
-public class NVReloadCmd extends Command {
+public class ReloadCmd extends Command {
 
     private final VotifierPlugin plugin;
 
@@ -23,8 +23,8 @@ public class NVReloadCmd extends Command {
         permission.setColor(ChatColor.DARK_RED);
     }
 
-    public NVReloadCmd(VotifierPlugin plugin) {
-        super("pnvreload", "votifierplugin.reload");
+    public ReloadCmd(VotifierPlugin plugin) {
+        super("proxyvotifierpluginreload", "votifierplugin.reload");
         this.plugin = plugin;
     }
 

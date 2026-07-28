@@ -3,7 +3,7 @@ package com.vexsoftware.votifier.fabric.cmd;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.context.CommandContext;
-import com.vexsoftware.votifier.fabric.NuVotifier;
+import com.vexsoftware.votifier.fabric.VotifierPlugin;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.net.VotifierSession;
 import com.vexsoftware.votifier.util.ArgsToVote;
@@ -17,30 +17,30 @@ import java.util.function.Predicate;
 import static net.minecraft.commands.Commands.argument;
 import static net.minecraft.commands.Commands.literal;
 
-public class NuVotifierCommand {
+public class VotifierPluginCommand {
 
-    private static NuVotifier plugin;
+    private static VotifierPlugin plugin;
 
-    public static void register(NuVotifier plugin, CommandDispatcher<CommandSourceStack> dispatcher) {
-        NuVotifierCommand.plugin = plugin;
+    public static void register(VotifierPlugin plugin, CommandDispatcher<CommandSourceStack> dispatcher) {
+        VotifierPluginCommand.plugin = plugin;
         Predicate<CommandSourceStack> reloadPerm = Permissions.require("votifierplugin.reload", 2);
         Predicate<CommandSourceStack> testVotePerm = Permissions.require("votifierplugin.testvote", 2);
         dispatcher.register(
                 literal("votifierplugin").requires(reloadPerm.or(testVotePerm))
                         .then(
                         literal("reload").requires(reloadPerm)
-                                .executes(NuVotifierCommand::reload)
+                                .executes(VotifierPluginCommand::reload)
                 ).then(
                         literal("testvote").then(
                                 argument("args", StringArgumentType.greedyString()).requires(testVotePerm)
-                                        .executes(NuVotifierCommand::sendTestVote)
+                                        .executes(VotifierPluginCommand::sendTestVote)
                         )
                 )
         );
     }
 
     private static int reload(CommandContext<CommandSourceStack> ctx) {
-        ctx.getSource().sendSuccess(Component.literal("Reloading NuVotifier...").withStyle(ChatFormatting.GRAY), false);
+        ctx.getSource().sendSuccess(Component.literal("Reloading VotifierPlugin...").withStyle(ChatFormatting.GRAY), false);
         if (plugin.reload()) {
             return 1;
         } else {

@@ -1,4 +1,4 @@
-name: NuVotifier
-main: com.vexsoftware.votifier.bungee.NuVotifier
+name: VotifierPlugin
+main: com.vexsoftware.votifier.bungee.VotifierPlugin
 version: "${internalVersion}"
 author: MinePick.net, Ichbinjoe, blakeman8192, Kramer, tuxed

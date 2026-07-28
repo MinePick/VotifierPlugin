@@ -1,7 +1,7 @@
 package com.vexsoftware.votifier.support.forwarding.proxy.client;
 
-import com.vexsoftware.votifier.platform.VotifierPlugin;
 import com.vexsoftware.votifier.model.Vote;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.CorruptedFrameException;
@@ -9,12 +9,12 @@ import io.netty.handler.codec.CorruptedFrameException;
 public class VotifierProtocol2HandshakeHandler extends SimpleChannelInboundHandler<String> {
     private final Vote toSend;
     private final VotifierResponseHandler responseHandler;
-    private final VotifierPlugin nuVotifier;
+    private final VotifierPluginInterface votifierPluginInterface;
 
-    public VotifierProtocol2HandshakeHandler(Vote toSend, VotifierResponseHandler responseHandler, VotifierPlugin nuVotifier) {
+    public VotifierProtocol2HandshakeHandler(Vote toSend, VotifierResponseHandler responseHandler, VotifierPluginInterface votifierPluginInterface) {
         this.toSend = toSend;
         this.responseHandler = responseHandler;
-        this.nuVotifier = nuVotifier;
+        this.votifierPluginInterface = votifierPluginInterface;
     }
 
     @Override
@@ -25,8 +25,8 @@ public class VotifierProtocol2HandshakeHandler extends SimpleChannelInboundHandl
         }
 
         VoteRequest request = new VoteRequest(handshakeContents[2], toSend);
-        if (nuVotifier.isDebug()) {
-            nuVotifier.getPluginLogger().info("Sent request: " + request.toString());
+        if (votifierPluginInterface.isDebug()) {
+            votifierPluginInterface.getPluginLogger().info("Sent request: " + request.toString());
         }
         ctx.writeAndFlush(request);
         ctx.pipeline().addLast(new VotifierProtocol2ResponseHandler(responseHandler));

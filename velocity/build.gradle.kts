@@ -28,8 +28,8 @@ dependencies {
     compileOnly("com.velocitypowered:velocity-api:${Versions.VELOCITY}")
     annotationProcessor("com.velocitypowered:velocity-api:${Versions.VELOCITY}")
 
-    "api"(project(":nuvotifier-api"))
-    "api"(project(":nuvotifier-common"))
+    "api"(project(":votifierplugin-api"))
+    "api"(project(":votifierplugin-common"))
 }
 
 tasks.named<Jar>("jar") {
@@ -44,12 +44,12 @@ tasks.named<ShadowJar>("shadowJar") {
     configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
 
     dependencies {
-        include(dependency(":nuvotifier-api"))
-        include(dependency(":nuvotifier-common"))
+        include(dependency(":votifierplugin-api"))
+        include(dependency(":votifierplugin-common"))
     }
 
     exclude("GradleStart**")
-    exclude(".cache");
+    exclude(".cache")
     exclude("LICENSE*")
     exclude("META-INF/services/**")
     exclude("META-INF/maven/**")

@@ -11,14 +11,14 @@ import net.md_5.bungee.event.EventHandler;
 
 public class PluginMessagingForwardingSource extends AbstractPluginMessagingForwardingSource implements Listener {
 
-    public PluginMessagingForwardingSource(String channel, ServerFilter serverFilter, NuVotifier nuVotifier, VoteCache cache, int dumpRate) {
-        super(channel, serverFilter, nuVotifier, cache, dumpRate);
-        ProxyServer.getInstance().getPluginManager().registerListener(nuVotifier, this);
+    public PluginMessagingForwardingSource(String channel, ServerFilter serverFilter, VotifierPlugin votifierPlugin, VoteCache cache, int dumpRate) {
+        super(channel, serverFilter, votifierPlugin, cache, dumpRate);
+        ProxyServer.getInstance().getPluginManager().registerListener(votifierPlugin, this);
     }
 
-    protected PluginMessagingForwardingSource(String channel, NuVotifier nuVotifier, VoteCache voteCache, int dumpRate) {
-        super(channel, nuVotifier, voteCache, dumpRate);
-        ProxyServer.getInstance().getPluginManager().registerListener(nuVotifier, this);
+    protected PluginMessagingForwardingSource(String channel, VotifierPlugin votifierPlugin, VoteCache voteCache, int dumpRate) {
+        super(channel, votifierPlugin, voteCache, dumpRate);
+        ProxyServer.getInstance().getPluginManager().registerListener(votifierPlugin, this);
     }
 
     @EventHandler

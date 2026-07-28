@@ -2,8 +2,9 @@ package com.vexsoftware.votifier.sponge.cmd;
 
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.net.VotifierSession;
-import com.vexsoftware.votifier.sponge.NuVotifier;
+import com.vexsoftware.votifier.sponge.VotifierPlugin;
 import com.vexsoftware.votifier.util.ArgsToVote;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.api.command.CommandException;
 import org.spongepowered.api.command.CommandResult;
 import org.spongepowered.api.command.CommandSource;
@@ -16,14 +17,14 @@ import java.util.Collection;
 
 public class TestVoteCmd implements CommandExecutor {
 
-    private final NuVotifier plugin;
+    private final VotifierPlugin plugin;
 
-    public TestVoteCmd(NuVotifier plugin) {
+    public TestVoteCmd(VotifierPlugin plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public CommandResult execute(CommandSource sender, CommandContext args) throws CommandException {
+    public CommandResult execute(@NonNull CommandSource sender, CommandContext args) throws CommandException {
         Vote v;
         try {
             Collection<String> a = args.getAll("args");

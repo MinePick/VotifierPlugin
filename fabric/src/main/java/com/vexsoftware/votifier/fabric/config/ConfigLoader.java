@@ -1,6 +1,6 @@
 package com.vexsoftware.votifier.fabric.config;
 
-import com.vexsoftware.votifier.fabric.NuVotifier;
+import com.vexsoftware.votifier.fabric.VotifierPlugin;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.nodes.Tag;
@@ -16,7 +16,7 @@ public class ConfigLoader {
     private static FabricConfig fabricConfig;
     private static Yaml yaml;
 
-    public static void loadConfig(NuVotifier pl) {
+    public static void loadConfig(VotifierPlugin pl) {
         DumperOptions options = new DumperOptions();
         options.setPrettyFlow(true);
 
@@ -30,7 +30,7 @@ public class ConfigLoader {
             }
         }
         try {
-            File config = new File(pl.getConfigDir(), "nuvotifier.yml");
+            File config = new File(pl.getConfigDir(), "votifierplugin.yml");
             if (!config.exists()) {
                 if (!config.createNewFile()) {
                     throw new IOException("Unable to create the config file at " + config);
@@ -42,7 +42,7 @@ public class ConfigLoader {
             }
             fabricConfig = yaml.loadAs(Files.newInputStream(config.toPath()), FabricConfig.class);
         } catch (Exception e) {
-            NuVotifier.LOGGER.error("Could not load config.", e);
+            VotifierPlugin.LOGGER.error("Could not load config.", e);
         }
     }
 

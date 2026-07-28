@@ -7,9 +7,9 @@ import net.md_5.bungee.api.scheduler.ScheduledTask;
 import java.util.concurrent.TimeUnit;
 
 class BungeeScheduler implements VotifierScheduler {
-    private final NuVotifier plugin;
+    private final VotifierPlugin plugin;
 
-    public BungeeScheduler(NuVotifier plugin) {
+    public BungeeScheduler(VotifierPlugin plugin) {
         this.plugin = plugin;
     }
 

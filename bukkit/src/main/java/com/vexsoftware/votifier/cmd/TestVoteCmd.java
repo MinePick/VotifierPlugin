@@ -1,6 +1,6 @@
 package com.vexsoftware.votifier.cmd;
 
-import com.vexsoftware.votifier.NuVotifierBukkit;
+import com.vexsoftware.votifier.VotifierPluginBukkit;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.net.VotifierSession;
 import com.vexsoftware.votifier.util.ArgsToVote;
@@ -8,18 +8,19 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.NotNull;
 
 public class TestVoteCmd implements CommandExecutor {
 
-    private final NuVotifierBukkit plugin;
+    private final VotifierPluginBukkit plugin;
 
-    public TestVoteCmd(NuVotifierBukkit plugin) {
+    public TestVoteCmd(VotifierPluginBukkit plugin) {
         this.plugin = plugin;
     }
 
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (sender.hasPermission("nuvotifier.testvote")) {
+    public boolean onCommand(CommandSender sender, @NotNull Command command, @NotNull String label, String[] args) {
+        if (sender.hasPermission("votifierplugin.testvote")) {
             Vote v;
             try {
                 v = ArgsToVote.parse(args);

@@ -1,26 +1,26 @@
 name: Votifier
-main: com.vexsoftware.votifier.NuVotifierBukkit
+main: com.vexsoftware.votifier.VotifierPluginBukkit
 version: "${internalVersion}"
 description: A plugin that gets notified when votes are made for the server on toplists.
 authors: [MinePick.net, Ichbinjoe, blakeman8192, Kramer, tuxed]
 api-version: 1.13
 
 commands:
-  nvreload:
-    description: Reloads the NuVotifier configuration
-    permission: nuvotifier.reload
+  votifierpluginreload:
+    description: Reloads the VotifierPlugin configuration
+    permission: votifierplugin.reload
     permission-message: "You do not have permission to run this command."
-    usage: "/nvreload"
+    usage: "/votifierpluginreload"
   testvote:
     description: Sends a test vote to the server
-    permission: nuvotifier.testvote
+    permission: votifierplugin.testvote
     permission-message: "You do not have permission to run this command."
     usage: "/testvote [username] [serviceName=?] [username=?] [address=?] [localTimestamp=?] [timestamp=?]"
 
 permissions:
-  nuvotifier.reload:
-    description: Allows you to reload the NuVotifier plugin
+  votifierplugin.reload:
+    description: Allows you to reload the VotifierPlugin plugin
     default: op
-  nuvotifier.testvote:
+  votifierplugin.testvote:
     description: Allows you to send a test vote
     default: op

@@ -1,8 +1,9 @@
 package com.vexsoftware.votifier.sponge.forwarding;
 
-import com.vexsoftware.votifier.sponge.NuVotifier;
+import com.vexsoftware.votifier.sponge.VotifierPlugin;
 import com.vexsoftware.votifier.support.forwarding.AbstractPluginMessagingForwardingSink;
 import com.vexsoftware.votifier.support.forwarding.ForwardedVoteListener;
+import org.checkerframework.checker.nullness.qual.NonNull;
 import org.spongepowered.api.Platform;
 import org.spongepowered.api.Sponge;
 import org.spongepowered.api.network.ChannelBinding;
@@ -14,10 +15,10 @@ import java.util.Optional;
 
 public class SpongePluginMessagingForwardingSink extends AbstractPluginMessagingForwardingSink implements RawDataListener {
 
-    private final NuVotifier p;
+    private final VotifierPlugin p;
     private final ChannelBinding.RawDataChannel channelBinding;
 
-    public SpongePluginMessagingForwardingSink(NuVotifier p, String channel, ForwardedVoteListener listener) {
+    public SpongePluginMessagingForwardingSink(VotifierPlugin p, String channel, ForwardedVoteListener listener) {
         super(listener);
 
         Optional<ChannelBinding> binding = Sponge.getChannelRegistrar().getChannel(channel);
@@ -41,7 +42,7 @@ public class SpongePluginMessagingForwardingSink extends AbstractPluginMessaging
     }
 
     @Override
-    public void handlePayload(ChannelBuf channelBuf, RemoteConnection remoteConnection, Platform.Type type) {
+    public void handlePayload(ChannelBuf channelBuf, @NonNull RemoteConnection remoteConnection, Platform.@NonNull Type type) {
         byte[] msgDirBuf = channelBuf.readBytes(channelBuf.available());
         try {
             this.handlePluginMessage(msgDirBuf);

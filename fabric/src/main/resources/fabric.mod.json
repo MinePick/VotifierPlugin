@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "nuvotifier",
+  "id": "votifierplugin",
   "version": "${internalVersion}",
-  "name": "NuVotifier",
+  "name": "VotifierPlugin",
   "description": "Safe, smart, and secure Votifier server mod",
   "authors": [
     "Drex"
@@ -11,7 +11,7 @@
   "environment": "server",
   "entrypoints": {
     "server": [
-      "com.vexsoftware.votifier.fabric.NuVotifier"
+      "com.vexsoftware.votifier.fabric.VotifierPlugin"
     ]
   },
   "depends": {

@@ -1,14 +1,12 @@
 package com.vexsoftware.votifier.net.protocol;
 
-import com.vexsoftware.votifier.platform.VotifierPlugin;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.net.VotifierSession;
 import com.vexsoftware.votifier.net.protocol.v1crypto.RSA;
-import com.vexsoftware.votifier.util.QuietException;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.embedded.EmbeddedChannel;
-import io.netty.handler.codec.CorruptedFrameException;
 import io.netty.handler.codec.DecoderException;
 import org.junit.jupiter.api.Test;
 
@@ -25,7 +23,7 @@ public class VotifierProtocol1DecoderTest {
     private EmbeddedChannel createChannel() {
         EmbeddedChannel channel = new EmbeddedChannel(new VotifierProtocol1Decoder());
         channel.attr(VotifierSession.KEY).set(SESSION);
-        channel.attr(VotifierPlugin.KEY).set(TestVotifierPlugin.getI());
+        channel.attr(VotifierPluginInterface.KEY).set(TestVotifierPlugin.getI());
         return channel;
     }
 

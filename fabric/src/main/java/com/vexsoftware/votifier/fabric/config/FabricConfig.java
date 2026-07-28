@@ -27,7 +27,7 @@ public class FabricConfig {
 
         public static class PluginMessaging {
 
-            public String channel = "nuvotifier:votes";
+            public String channel = "votifierplugin:votes";
 
         }
     }

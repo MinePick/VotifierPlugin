@@ -6,11 +6,11 @@ import com.vexsoftware.votifier.velocity.VotifierPlugin;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
-public class NVReloadCmd implements SimpleCommand {
+public class ReloadCmd implements SimpleCommand {
 
     private final VotifierPlugin plugin;
 
-    public NVReloadCmd(VotifierPlugin plugin) {
+    public ReloadCmd(VotifierPlugin plugin) {
         this.plugin = plugin;
     }
 

@@ -1,9 +1,9 @@
 package com.vexsoftware.votifier.net.protocol;
 
 import com.google.gson.JsonObject;
-import com.vexsoftware.votifier.platform.VotifierPlugin;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.net.VotifierSession;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.util.GsonInst;
 import com.vexsoftware.votifier.util.KeyCreator;
 import io.netty.channel.embedded.EmbeddedChannel;
@@ -25,7 +25,7 @@ public class VotifierProtocol2DecoderTest {
     private EmbeddedChannel createChannel() {
         EmbeddedChannel channel = new EmbeddedChannel(new VotifierProtocol2Decoder());
         channel.attr(VotifierSession.KEY).set(SESSION);
-        channel.attr(VotifierPlugin.KEY).set(TestVotifierPlugin.getI());
+        channel.attr(VotifierPluginInterface.KEY).set(TestVotifierPlugin.getI());
         return channel;
     }
 

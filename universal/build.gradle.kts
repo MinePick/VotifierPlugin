@@ -12,13 +12,13 @@ configurations {
 }
 
 dependencies {
-    "implementation"(project(":nuvotifier-api"))
-    "implementation"(project(":nuvotifier-common"))
-    "implementation"(project(":nuvotifier-bukkit"))
-    "implementation"(project(":nuvotifier-bungeecord"))
-    "implementation"(project(":nuvotifier-sponge"))
-    "implementation"(project(":nuvotifier-fabric"))
-    "implementation"(project(":nuvotifier-velocity"))
+    "implementation"(project(":votifierplugin-api"))
+    "implementation"(project(":votifierplugin-common"))
+    "implementation"(project(":votifierplugin-bukkit"))
+    "implementation"(project(":votifierplugin-bungeecord"))
+    "implementation"(project(":votifierplugin-sponge"))
+    "implementation"(project(":votifierplugin-fabric"))
+    "implementation"(project(":votifierplugin-velocity"))
 }
 
 tasks.named<Jar>("jar") {
@@ -33,17 +33,17 @@ tasks.named<ShadowJar>("shadowJar") {
     configurations = listOf(project.configurations["shadeOnly"], project.configurations["runtimeClasspath"])
 
     dependencies {
-        include(dependency(":nuvotifier-api"))
-        include(dependency(":nuvotifier-common"))
-        include(dependency(":nuvotifier-bukkit"))
-        include(dependency(":nuvotifier-bungeecord"))
-        include(dependency(":nuvotifier-sponge"))
-        include(dependency(":nuvotifier-fabric"))
-        include(dependency(":nuvotifier-velocity"))
+        include(dependency(":votifierplugin-api"))
+        include(dependency(":votifierplugin-common"))
+        include(dependency(":votifierplugin-bukkit"))
+        include(dependency(":votifierplugin-bungeecord"))
+        include(dependency(":votifierplugin-sponge"))
+        include(dependency(":votifierplugin-fabric"))
+        include(dependency(":votifierplugin-velocity"))
     }
 
     exclude("GradleStart**")
-    exclude(".cache");
+    exclude(".cache")
     exclude("LICENSE*")
     exclude("META-INF/services/**")
     exclude("META-INF/maven/**")

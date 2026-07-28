@@ -36,6 +36,6 @@ public class TestVoteCmd implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return invocation.source().hasPermission("nuvotifier.testvote");
+        return invocation.source().hasPermission("votifierplugin.testvote");
     }
 }

@@ -3,10 +3,9 @@ package com.vexsoftware.votifier.net.protocol;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.net.VotifierSession;
 import com.vexsoftware.votifier.platform.LoggingAdapter;
-import com.vexsoftware.votifier.platform.VotifierPlugin;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.platform.scheduler.VotifierScheduler;
 import com.vexsoftware.votifier.util.KeyCreator;
-import io.netty.channel.Channel;
 
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
@@ -20,7 +19,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestVotifierPlugin implements VotifierPlugin {
+public class TestVotifierPlugin implements VotifierPluginInterface {
     private static final byte[] PUBLIC_KEY;
     private static final byte[] PRIVATE_KEY;
 

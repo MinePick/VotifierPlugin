@@ -8,8 +8,8 @@ import java.security.Key;
 import java.security.KeyPair;
 import java.util.Map;
 
-public interface VotifierPlugin extends VoteHandler {
-    AttributeKey<VotifierPlugin> KEY = AttributeKey.valueOf("votifier_plugin");
+public interface VotifierPluginInterface extends VoteHandler {
+    AttributeKey<VotifierPluginInterface> KEY = AttributeKey.valueOf("votifier_plugin");
 
     Map<String, Key> getTokens();
 

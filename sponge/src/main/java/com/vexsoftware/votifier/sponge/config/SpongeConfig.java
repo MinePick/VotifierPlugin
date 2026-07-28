@@ -19,19 +19,19 @@ public class SpongeConfig {
     public int port = 8192;
 
     @Setting(comment = "Whether or not to print debug messages. In a production system, this should be set to false.\n" +
-            "This is useful when initially setting up NuVotifier to ensure votes are being delivered.")
+            "This is useful when initially setting up VotifierPlugin to ensure votes are being delivered.")
     public boolean debug = true;
 
     @Setting( value = "disable-v1-protocol", comment = "Setting this option to true will disable handling of Protocol v1 packets. While the old protocol is not secure, this\n" +
             "option is currently not recommended as most voting sites only support the old protocol at present. However, if you are\n" +
-            "using NuVotifier's proxy forwarding mechanism, enabling this option will increase your server's security.")
+            "using VotifierPlugin's proxy forwarding mechanism, enabling this option will increase your server's security.")
     public boolean disableV1Protocol = false;
 
     @Setting(comment = "All tokens, labeled by the serviceName of each server list.\n" +
             "Default token for all server lists, if another isn't supplied.")
     public Map<String, String> tokens = Collections.singletonMap("default", TokenUtil.newToken());
 
-    @Setting(comment = "Configuration section for all vote forwarding to NuVotifier")
+    @Setting(comment = "Configuration section for all vote forwarding to VotifierPlugin")
     public Forwarding forwarding = new Forwarding();
 
     @ConfigSerializable
@@ -49,7 +49,7 @@ public class SpongeConfig {
         public static class PluginMessaging {
 
             @Setting
-            public String channel = "nuvotifier:votes";
+            public String channel = "votifierplugin:votes";
         }
     }
 }

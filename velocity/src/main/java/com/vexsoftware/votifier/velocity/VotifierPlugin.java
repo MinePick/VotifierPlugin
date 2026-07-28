@@ -28,7 +28,7 @@ import com.vexsoftware.votifier.support.forwarding.proxy.ProxyForwardingVoteSour
 import com.vexsoftware.votifier.util.IOUtil;
 import com.vexsoftware.votifier.util.KeyCreator;
 import com.vexsoftware.votifier.util.TokenUtil;
-import com.vexsoftware.votifier.velocity.cmd.NVReloadCmd;
+import com.vexsoftware.votifier.velocity.cmd.ReloadCmd;
 import com.vexsoftware.votifier.velocity.cmd.TestVoteCmd;
 import com.vexsoftware.votifier.velocity.event.VotifierEvent;
 import org.slf4j.Logger;
@@ -50,7 +50,7 @@ import java.security.KeyPair;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Plugin(id = "nuvotifier", name = "NuVotifier", version = "@version@", authors = "MinePick.net",
+@Plugin(id = "votifierplugin", name = "VotifierPlugin", version = "@version@", authors = "MinePick.net",
         description = "Safe, smart, and secure Votifier server plugin")
 public class VotifierPlugin implements VoteHandler, ProxyVotifierPlugin {
 
@@ -119,7 +119,7 @@ public class VotifierPlugin implements VoteHandler, ProxyVotifierPlugin {
         if (disablev1) {
             logger.info("------------------------------------------------------------------------------");
             logger.info("Votifier protocol v1 parsing has been disabled. Most voting websites do not");
-            logger.info("currently support the modern Votifier protocol in NuVotifier.");
+            logger.info("currently support the modern Votifier protocol in VotifierPlugin.");
             logger.info("------------------------------------------------------------------------------");
         }
 
@@ -133,7 +133,7 @@ public class VotifierPlugin implements VoteHandler, ProxyVotifierPlugin {
             getLogger().info("Method none selected for vote forwarding: Votes will not be forwarded to backend servers.");
         } else if ("pluginmessaging".equals(fwdMethod)) {
             Toml pmCfg = fwdCfg.getTable("pluginMessaging");
-            String channel = pmCfg.getString("channel", "NuVotifier");
+            String channel = pmCfg.getString("channel", "VotifierPlugin");
             String cacheMethod = pmCfg.getString("cache", "file").toLowerCase();
             VoteCache voteCache = null;
             if ("none".equals(cacheMethod)) {
@@ -165,7 +165,7 @@ public class VotifierPlugin implements VoteHandler, ProxyVotifierPlugin {
                     forwardingMethod = new PluginMessagingForwardingSource(channel, filter, this, voteCache, dumpRate);
                     getLogger().info("Forwarding votes over PluginMessaging channel '" + channel + "' for vote forwarding!");
                 } catch (RuntimeException e) {
-                    getLogger().error("NuVotifier could not set up PluginMessaging for vote forwarding!", e);
+                    getLogger().error("VotifierPlugin could not set up PluginMessaging for vote forwarding!", e);
                 }
             } else {
                 try {
@@ -174,7 +174,7 @@ public class VotifierPlugin implements VoteHandler, ProxyVotifierPlugin {
                     forwardingMethod = new OnlineForwardPluginMessagingForwardingSource(channel, filter, this, voteCache, fallbackServer, dumpRate);
                     getLogger().info("Forwarding votes over PluginMessaging channel '" + channel + "' for vote forwarding for online players!");
                 } catch (RuntimeException e) {
-                    getLogger().error("NuVotifier could not set up PluginMessaging for vote forwarding!", e);
+                    getLogger().error("VotifierPlugin could not set up PluginMessaging for vote forwarding!", e);
                 }
             }
         } else if ("proxy".equals(fwdMethod)) {
@@ -208,7 +208,7 @@ public class VotifierPlugin implements VoteHandler, ProxyVotifierPlugin {
             }
 
             forwardingMethod = bootstrap.createForwardingSource(serverList, null);
-            getLogger().info("Forwarding votes from this NuVotifier instance to another NuVotifier server.");
+            getLogger().info("Forwarding votes from this VotifierPlugin instance to another VotifierPlugin server.");
         } else {
             getLogger().error("No vote forwarding method '" + fwdMethod + "' known. Defaulting to noop implementation.");
         }
@@ -254,8 +254,8 @@ public class VotifierPlugin implements VoteHandler, ProxyVotifierPlugin {
         this.scheduler = new VelocityScheduler(server, this);
         this.loggingAdapter = new SLF4JLogger(logger);
 
-        this.getServer().getCommandManager().register("pnvreload", new NVReloadCmd(this));
-        this.getServer().getCommandManager().register("ptestvote", new TestVoteCmd(this));
+        this.getServer().getCommandManager().register("proxyvotifierpluginreload", new ReloadCmd(this));
+        this.getServer().getCommandManager().register("proxytestvote", new TestVoteCmd(this));
 
         if (!loadAndBind())
             gracefulExit();
@@ -300,13 +300,13 @@ public class VotifierPlugin implements VoteHandler, ProxyVotifierPlugin {
              * port number.
              */
             getLogger().info("------------------------------------------------------------------------------");
-            getLogger().info("Assigning NuVotifier to listen on port 8192. If you are hosting BungeeCord on a");
+            getLogger().info("Assigning VotifierPlugin to listen on port 8192. If you are hosting BungeeCord on a");
             getLogger().info("shared server please check with your hosting provider to verify that this port");
             getLogger().info("is available for your use. Chances are that your hosting provider will assign");
             getLogger().info("a different port, which you need to specify in config.toml.");
             getLogger().info("------------------------------------------------------------------------------");
-            getLogger().info("Assigning NuVotifier to listen to interface 0.0.0.0. This is usually alright,");
-            getLogger().info("however, if you want NuVotifier to only listen to one interface for security ");
+            getLogger().info("Assigning VotifierPlugin to listen to interface 0.0.0.0. This is usually alright,");
+            getLogger().info("however, if you want VotifierPlugin to only listen to one interface for security ");
             getLogger().info("reasons (or you use a shared host), you may change this in the config.toml.");
             getLogger().info("------------------------------------------------------------------------------");
             getLogger().info("Your default Votifier token is " + token + ".");

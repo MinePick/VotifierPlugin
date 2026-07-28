@@ -3,16 +3,13 @@ package com.vexsoftware.votifier.support.forwarding.cache;
 import com.google.gson.JsonObject;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.platform.LoggingAdapter;
-import com.vexsoftware.votifier.platform.VotifierPlugin;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.platform.scheduler.ScheduledVotifierTask;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * Created by Joe Hirschfeld on 10/20/2015.
- */
 public class MemoryVoteCache implements VoteCache {
 
     private final LoggingAdapter l;
@@ -25,7 +22,7 @@ public class MemoryVoteCache implements VoteCache {
 
     private final ScheduledVotifierTask sweepTask;
 
-    public MemoryVoteCache(VotifierPlugin p, long voteTTL) {
+    public MemoryVoteCache(VotifierPluginInterface p, long voteTTL) {
         voteCache = new HashMap<>();
         playerVoteCache = new HashMap<>();
 

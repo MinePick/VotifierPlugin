@@ -1,6 +1,6 @@
 package com.vexsoftware.votifier.bungee.cmd;
 
-import com.vexsoftware.votifier.bungee.NuVotifier;
+import com.vexsoftware.votifier.bungee.VotifierPlugin;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.net.VotifierSession;
 import com.vexsoftware.votifier.util.ArgsToVote;
@@ -12,23 +12,23 @@ import net.md_5.bungee.api.plugin.Command;
 
 public class TestVoteCmd extends Command {
 
-    private final NuVotifier plugin;
+    private final VotifierPlugin plugin;
 
     private static final BaseComponent permission = new TextComponent("You do not have permission to do this!");
-    private static final BaseComponent usage = new TextComponent("Usage hint: /ptestvote [username] [serviceName=?] [username=?] [address=?] [localTimestamp=?] [timestamp=?]");
+    private static final BaseComponent usage = new TextComponent("Usage hint: /proxytestvote [username] [serviceName=?] [username=?] [address=?] [localTimestamp=?] [timestamp=?]");
 
     static {
         usage.setColor(ChatColor.GRAY);
     }
 
-    public TestVoteCmd(NuVotifier plugin) {
-        super("ptestvote", "nuvotifier.testvote");
+    public TestVoteCmd(VotifierPlugin plugin) {
+        super("proxytestvote", "votifierplugin.testvote");
         this.plugin = plugin;
     }
 
     @Override
     public void execute(CommandSender sender, String[] args) {
-        if (sender.hasPermission("nuvotifier.testvote")) {
+        if (sender.hasPermission("votifierplugin.testvote")) {
             Vote v;
             try {
                 v = ArgsToVote.parse(args);

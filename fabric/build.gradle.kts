@@ -35,8 +35,8 @@ dependencies {
     "include"("me.lucko:fabric-permissions-api:0.3.1")
 
 
-    "api"(project(":nuvotifier-api"))
-    "api"(project(":nuvotifier-common"))
+    "api"(project(":votifierplugin-api"))
+    "api"(project(":votifierplugin-common"))
 }
 
 tasks.named<Copy>("processResources") {
@@ -54,8 +54,8 @@ tasks.named<ShadowJar>("shadowJar") {
 
     dependencies {
         relocate("org.yaml", "com.vexsoftware.votifier.libs.org.yaml")
-        include(dependency(":nuvotifier-api"))
-        include(dependency(":nuvotifier-common"))
+        include(dependency(":votifierplugin-api"))
+        include(dependency(":votifierplugin-common"))
         include(dependency("org.yaml:snakeyaml:"))
     }
     exclude("mappings/mappings.tiny")

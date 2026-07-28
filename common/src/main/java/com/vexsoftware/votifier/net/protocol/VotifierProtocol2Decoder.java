@@ -1,9 +1,9 @@
 package com.vexsoftware.votifier.net.protocol;
 
 import com.google.gson.JsonObject;
-import com.vexsoftware.votifier.platform.VotifierPlugin;
 import com.vexsoftware.votifier.model.Vote;
 import com.vexsoftware.votifier.net.VotifierSession;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.util.GsonInst;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.CorruptedFrameException;
@@ -38,7 +38,7 @@ public class VotifierProtocol2Decoder extends MessageToMessageDecoder<String> {
         }
 
         // Verify that we have keys available.
-        VotifierPlugin plugin = ctx.channel().attr(VotifierPlugin.KEY).get();
+        VotifierPluginInterface plugin = ctx.channel().attr(VotifierPluginInterface.KEY).get();
         Key key = plugin.getTokens().get(votePayload.get("serviceName").getAsString());
 
         if (key == null) {

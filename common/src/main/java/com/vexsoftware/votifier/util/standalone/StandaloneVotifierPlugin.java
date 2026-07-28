@@ -5,7 +5,7 @@ import com.vexsoftware.votifier.net.VotifierServerBootstrap;
 import com.vexsoftware.votifier.net.VotifierSession;
 import com.vexsoftware.votifier.platform.JavaUtilLogger;
 import com.vexsoftware.votifier.platform.LoggingAdapter;
-import com.vexsoftware.votifier.platform.VotifierPlugin;
+import com.vexsoftware.votifier.platform.VotifierPluginInterface;
 import com.vexsoftware.votifier.platform.scheduler.ScheduledExecutorServiceVotifierScheduler;
 import com.vexsoftware.votifier.platform.scheduler.VotifierScheduler;
 
@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-public class StandaloneVotifierPlugin implements VotifierPlugin {
+public class StandaloneVotifierPlugin implements VotifierPluginInterface {
     private final Map<String, Key> tokens;
     private final VoteReceiver receiver;
     private final KeyPair v1Key;
